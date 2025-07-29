@@ -2,11 +2,11 @@ import pygame
 
 
 class Button:
-    def __init__(self, scr: pygame.Surface, rect: pygame.Rect | tuple[int, int, int, int], color: tuple[int, int, int],
+    def __init__(self, scr: pygame.Surface, rect: pygame.Rect | tuple[int, int, int, int], color: list[int],
                  on_click_func,
-                 btn_text: str = "", btntext_color: tuple[int, int, int] = (255, 255, 255),
+                 btn_text: str = "", btntext_color: list[int] = (255, 255, 255),
                  font_path: str | None = None,
-                 text_size: int = 0, border_thickness: int = 5, border_color: tuple[int, int, int] = (255, 255, 255),
+                 text_size: int = 0, border_thickness: int = 5, border_color: list[int] = (255, 255, 255),
                  corner_radius: int = 0) -> None:
 
         """
@@ -43,11 +43,16 @@ class Button:
 
         self.on_click = on_click_func
 
-        self.active = False
+        self.active = True
         self.show = False
 
         self.border_thickness = border_thickness
         self.border_color = border_color
+
+        self.original_color = color
+        self.original_border_color = border_color
+
+        self.is_being_pressed = False
 
         if corner_radius < 0:
             raise ValueError(f"Corner radius cannot be negative. ({corner_radius})")
@@ -205,10 +210,32 @@ class Button:
 
             mouse_pos = pygame.mouse.get_pos()
             if self.rect.colliderect((mouse_pos[0], mouse_pos[1], 1, 1)) and self.active:
+
+                self.color = [max(0, x - 20) for x in self.original_color]
+                self.border_color = [max(0, x - 20) for x in self.original_border_color]
+
                 if pygame.mouse.get_pressed()[0]:
-                    self.on_click()
+                    if not self.is_being_pressed:
+                        self.on_click()
+
+                    self.color = [max(0, x - 30) for x in self.original_color]
+                    self.border_color = [max(0, x - 30) for x in self.original_border_color]
+
+
+                    self.is_being_pressed = True
+                elif not pygame.mouse.get_pressed()[0]:
+                    if self.is_being_pressed:
+                        self.color = self.original_color
+                    self.is_being_pressed = False
+
+
+            else:
+                self.color = self.original_color
 
             return
+
+    def __str__(self):
+        return f"Button <{self.text}>"
 
 
 if __name__ == "__main__":
@@ -228,13 +255,13 @@ if __name__ == "__main__":
 
 
     def on_click():
-        print("i AM in space actually")
+        print(button)
 
 
     button = Button(
-        screen, pygame.Rect(300, 300, 300, 100), (255, 0, 0), on_click,
-        "Go to space!", (0, 0, 0), "files/DynaPuff-VariableFont_wdth,wght.ttf",
-        30, 15, (190, 0, 0), 20
+        screen, pygame.Rect(300, 300, 300, 100), [255, 0, 0], on_click,
+        "Go to space!", [0, 0, 0], "files/DynaPuff-VariableFont_wdth,wght.ttf",
+        30, 15, [190, 0, 0], 20
     )
     button.show = True
 
