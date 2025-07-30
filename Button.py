@@ -3,7 +3,7 @@ import pygame
 
 class Button:
     def __init__(self, scr: pygame.Surface, rect: pygame.Rect | tuple[int, int, int, int], color: list[int],
-                 on_click_func,
+                 on_click_func, image_path: str | None = None,
                  btn_text: str = "", btntext_color: list[int] = (255, 255, 255),
                  font_path: str | None = None,
                  text_size: int = 0, border_thickness: int = 5, border_color: list[int] = (255, 255, 255),
@@ -54,6 +54,8 @@ class Button:
 
         self.is_being_pressed = False
 
+        self.image_path = image_path
+
         if corner_radius < 0:
             raise ValueError(f"Corner radius cannot be negative. ({corner_radius})")
         else:
@@ -63,16 +65,182 @@ class Button:
 
     def handle(self) -> None:
         if self.show:
-            if self.corner_radius == 0:
-                pygame.draw.rect(self.screen, self.border_color,
-                                 (self.rect[0] - self.border_thickness, self.rect[1] - self.border_thickness,
-                                  self.rect[2] + (self.border_thickness * 2), self.rect[3] + (self.border_thickness * 2)
-                                  ))
+            if not self.image_path:
+                if self.corner_radius == 0:
+                    pygame.draw.rect(self.screen, self.border_color,
+                                     (self.rect[0] - self.border_thickness, self.rect[1] - self.border_thickness,
+                                      self.rect[2] + (self.border_thickness * 2), self.rect[3] + (self.border_thickness * 2)
+                                      ))
 
-                pygame.draw.rect(self.screen, self.color, self.rect)
+                    pygame.draw.rect(self.screen, self.color, self.rect)
 
+                else:
+                    # CORNERS
+                    pygame.draw.circle(self.screen, self.border_color,
+                                       (self.rect[0], self.rect[1]),
+                                       self.corner_radius, draw_top_left=True)  # TOP LEFT
+
+                    pygame.draw.circle(self.screen, self.border_color,
+                                       (
+                                           self.rect[0] + self.rect[2],
+                                           self.rect[1]),
+                                       self.corner_radius, draw_top_right=True)  # TOP RIGHT
+
+                    pygame.draw.circle(self.screen, self.border_color,
+                                       (
+                                           self.rect[0],
+                                           self.rect[1] + self.rect[3]),
+                                       self.corner_radius, draw_bottom_left=True)  # BOTTOM LEFT
+
+                    pygame.draw.circle(self.screen, self.border_color,
+                                       (self.rect[0] + self.rect[2],
+                                        self.rect[1] + self.rect[3]),
+                                       self.corner_radius, draw_bottom_right=True)  # BOTTOM RIGHT
+
+                    # LINES
+                    pygame.draw.line(self.screen, self.border_color,
+                                     (self.rect[0], self.rect[1] - self.corner_radius / 2),
+                                     (self.rect[0]+self.rect[2], self.rect[1]-self.corner_radius/2),
+                                     width=self.corner_radius + 1)  # top line
+
+                    pygame.draw.line(self.screen, self.border_color,
+                                     (self.rect[0] - (self.corner_radius / 2),
+                                      self.rect[1]),
+                                     (self.rect[0] - (self.corner_radius / 2),
+                                      self.rect[1] + self.rect[3]),
+                                     width=self.corner_radius + 1)  # left line
+
+                    pygame.draw.line(self.screen, self.border_color,
+                                     (self.rect[0],
+                                      self.rect[1] + self.rect[3] + self.corner_radius / 2),
+                                     (self.rect[0] + self.rect[2],
+                                      self.rect[1] + self.rect[3] + self.corner_radius / 2),
+                                     width=self.corner_radius + 1)  # bottom line
+
+                    pygame.draw.line(self.screen, self.border_color,
+                                     (self.rect[0] + self.rect[2] + self.corner_radius / 2,
+                                      self.rect[1]),
+                                     (self.rect[0] + self.rect[2] + self.corner_radius / 2,
+                                      self.rect[1] + self.rect[3]),
+                                     width=self.corner_radius + 1)  # right line
+
+                    # FILL
+
+                    pygame.draw.rect(self.screen, self.border_color, self.rect)
+
+                    # CORNERS
+                    pygame.draw.circle(self.screen, self.color,
+                                       (self.rect[0] + self.corner_radius, self.rect[1] + self.corner_radius),
+                                       self.corner_radius, draw_top_left=True)  # TOP LEFT
+
+                    pygame.draw.circle(self.screen, self.color,
+                                       (
+                                       self.rect[0] + self.rect[2] - self.corner_radius, self.rect[1] + self.corner_radius),
+                                       self.corner_radius, draw_top_right=True)  # TOP RIGHT
+
+                    pygame.draw.circle(self.screen, self.color,
+                                       (
+                                       self.rect[0] + self.corner_radius, self.rect[1] + self.rect[3] - self.corner_radius),
+                                       self.corner_radius, draw_bottom_left=True)  # BOTTOM LEFT
+
+                    pygame.draw.circle(self.screen, self.color,
+                                       (self.rect[0] + self.rect[2] - self.corner_radius,
+                                        self.rect[1] + self.rect[3] - self.corner_radius),
+                                       self.corner_radius, draw_bottom_right=True)  # BOTTOM RIGHT
+
+                    # LINES
+                    pygame.draw.line(self.screen, self.color,
+                                     (self.rect[0] + self.corner_radius, self.rect[1] + self.corner_radius / 2),
+                                     (self.rect[0] + self.rect[2] - self.corner_radius,
+                                      self.rect[1] + self.corner_radius / 2),
+                                     width=self.corner_radius + 1)  # top line
+
+                    pygame.draw.line(self.screen, self.color,
+                                     (self.rect[0] + (self.corner_radius / 2), self.rect[1] + self.corner_radius),
+                                     (self.rect[0] + (self.corner_radius / 2),
+                                      self.rect[1] + self.rect[3] - self.corner_radius),
+                                     width=self.corner_radius + 1)  # left line
+
+                    pygame.draw.line(self.screen, self.color,
+                                     (self.rect[0] + self.corner_radius,
+                                      self.rect[1] + self.rect[3] - self.corner_radius / 2),
+                                     (self.rect[0] + self.rect[2] - self.corner_radius,
+                                      self.rect[1] + self.rect[3] - self.corner_radius / 2),
+                                     width=self.corner_radius + 1)  # bottom line
+
+                    pygame.draw.line(self.screen, self.color,
+                                     (self.rect[0] + self.rect[2] - self.corner_radius / 2,
+                                      self.rect[1] + self.corner_radius),
+                                     (self.rect[0] + self.rect[2] - self.corner_radius / 2,
+                                      self.rect[1] + self.rect[3] - self.corner_radius),
+                                     width=self.corner_radius + 1)  # right line
+
+                    # FILL
+
+                    pygame.draw.rect(self.screen, self.color, (self.rect[0] + self.corner_radius,
+                                                               self.rect[1] + self.corner_radius,
+                                                               self.rect[2] - self.corner_radius * 2,
+                                                               self.rect[3] - self.corner_radius * 2))
+
+                    debug = False
+                    if debug:
+                        # DEBUG THINGIES
+                        pygame.draw.circle(self.screen, (255, 0, 0),
+                                           (self.rect[0], self.rect[1]), 7)  # top left
+
+                        pygame.draw.circle(self.screen, (0, 255, 0),
+                                           (self.rect[0] + self.rect[2], self.rect[1]), 7)  # top right
+
+                        pygame.draw.circle(self.screen, (0, 0, 255),
+                                           (self.rect[0], self.rect[1] + self.rect[3]), 7)  # bottom left
+
+                        pygame.draw.circle(self.screen, (255, 0, 255),
+                                           (self.rect[0] + self.rect[2], self.rect[1] + self.rect[3]), 7)  # bottom right
+
+                if self.text_size > 0:
+                    size = self.text_size
+                else:
+                    size = self.rect[3] - (self.rect[3] // 3)
+
+                btn_font = pygame.font.Font(self.font_path, size)
+
+                textobj = btn_font.render(self.text, True, self.text_color)
+                textobj_rect = textobj.get_rect()
+
+                textobj_rect.center = (self.rect[0] + self.rect[2] // 2, self.rect[1] + self.rect[3] // 2)
+
+                self.screen.blit(textobj, textobj_rect)
+
+                mouse_pos = pygame.mouse.get_pos()
+                if self.rect.colliderect((mouse_pos[0], mouse_pos[1], 1, 1)) and self.active:
+
+                    self.color = [max(0, x - 20) for x in self.original_color]
+                    self.border_color = [max(0, x - 20) for x in self.original_border_color]
+
+                    if pygame.mouse.get_pressed()[0]:
+                        if not self.is_being_pressed:
+                            self.on_click()
+
+                        self.color = [max(0, x - 30) for x in self.original_color]
+                        self.border_color = [max(0, x - 30) for x in self.original_border_color]
+
+
+                        self.is_being_pressed = True
+                    elif not pygame.mouse.get_pressed()[0]:
+                        if self.is_being_pressed:
+                            self.color = self.original_color
+                        self.is_being_pressed = False
+
+                else:
+                    self.color = self.original_color
+
+                return
             else:
-                # CORNERS
+                image_texture = pygame.image.load(self.image_path)
+                resized_image = pygame.transform.scale(image_texture, (self.rect.width, self.rect.height))
+
+                self.screen.blit(resized_image, self.rect)
+
                 pygame.draw.circle(self.screen, self.border_color,
                                    (self.rect[0], self.rect[1]),
                                    self.corner_radius, draw_top_left=True)  # TOP LEFT
@@ -97,7 +265,7 @@ class Button:
                 # LINES
                 pygame.draw.line(self.screen, self.border_color,
                                  (self.rect[0], self.rect[1] - self.corner_radius / 2),
-                                 (self.rect[0]+self.rect[2], self.rect[1]-self.corner_radius/2),
+                                 (self.rect[0] + self.rect[2], self.rect[1] - self.corner_radius / 2),
                                  width=self.corner_radius + 1)  # top line
 
                 pygame.draw.line(self.screen, self.border_color,
@@ -121,118 +289,38 @@ class Button:
                                   self.rect[1] + self.rect[3]),
                                  width=self.corner_radius + 1)  # right line
 
-                # FILL
+                if self.text_size > 0:
+                    size = self.text_size
+                else:
+                    size = self.rect[3] - (self.rect[3] // 3)
 
-                pygame.draw.rect(self.screen, self.border_color, self.rect)
+                btn_font = pygame.font.Font(self.font_path, size)
 
-                # CORNERS
-                pygame.draw.circle(self.screen, self.color,
-                                   (self.rect[0] + self.corner_radius, self.rect[1] + self.corner_radius),
-                                   self.corner_radius, draw_top_left=True)  # TOP LEFT
+                textobj = btn_font.render(self.text, True, self.text_color)
+                textobj_rect = textobj.get_rect()
 
-                pygame.draw.circle(self.screen, self.color,
-                                   (
-                                   self.rect[0] + self.rect[2] - self.corner_radius, self.rect[1] + self.corner_radius),
-                                   self.corner_radius, draw_top_right=True)  # TOP RIGHT
+                textobj_rect.center = (self.rect[0] + self.rect[2] // 2, self.rect[1] + self.rect[3] // 2)
 
-                pygame.draw.circle(self.screen, self.color,
-                                   (
-                                   self.rect[0] + self.corner_radius, self.rect[1] + self.rect[3] - self.corner_radius),
-                                   self.corner_radius, draw_bottom_left=True)  # BOTTOM LEFT
+                self.screen.blit(textobj, textobj_rect)
 
-                pygame.draw.circle(self.screen, self.color,
-                                   (self.rect[0] + self.rect[2] - self.corner_radius,
-                                    self.rect[1] + self.rect[3] - self.corner_radius),
-                                   self.corner_radius, draw_bottom_right=True)  # BOTTOM RIGHT
+                mouse_pos = pygame.mouse.get_pos()
+                if self.rect.colliderect((mouse_pos[0], mouse_pos[1], 1, 1)) and self.active:
 
-                # LINES
-                pygame.draw.line(self.screen, self.color,
-                                 (self.rect[0] + self.corner_radius, self.rect[1] + self.corner_radius / 2),
-                                 (self.rect[0] + self.rect[2] - self.corner_radius,
-                                  self.rect[1] + self.corner_radius / 2),
-                                 width=self.corner_radius + 1)  # top line
+                    self.color = [max(0, x - 20) for x in self.original_color]
+                    self.border_color = [max(0, x - 20) for x in self.original_border_color]
 
-                pygame.draw.line(self.screen, self.color,
-                                 (self.rect[0] + (self.corner_radius / 2), self.rect[1] + self.corner_radius),
-                                 (self.rect[0] + (self.corner_radius / 2),
-                                  self.rect[1] + self.rect[3] - self.corner_radius),
-                                 width=self.corner_radius + 1)  # left line
+                    if pygame.mouse.get_pressed()[0]:
+                        if not self.is_being_pressed:
+                            self.on_click()
 
-                pygame.draw.line(self.screen, self.color,
-                                 (self.rect[0] + self.corner_radius,
-                                  self.rect[1] + self.rect[3] - self.corner_radius / 2),
-                                 (self.rect[0] + self.rect[2] - self.corner_radius,
-                                  self.rect[1] + self.rect[3] - self.corner_radius / 2),
-                                 width=self.corner_radius + 1)  # bottom line
+                        self.color = [max(0, x - 30) for x in self.original_color]
+                        self.border_color = [max(0, x - 30) for x in self.original_border_color]
 
-                pygame.draw.line(self.screen, self.color,
-                                 (self.rect[0] + self.rect[2] - self.corner_radius / 2,
-                                  self.rect[1] + self.corner_radius),
-                                 (self.rect[0] + self.rect[2] - self.corner_radius / 2,
-                                  self.rect[1] + self.rect[3] - self.corner_radius),
-                                 width=self.corner_radius + 1)  # right line
-
-                # FILL
-
-                pygame.draw.rect(self.screen, self.color, (self.rect[0] + self.corner_radius,
-                                                           self.rect[1] + self.corner_radius,
-                                                           self.rect[2] - self.corner_radius * 2,
-                                                           self.rect[3] - self.corner_radius * 2))
-
-                debug = False
-                if debug:
-                    # DEBUG THINGIES
-                    pygame.draw.circle(self.screen, (255, 0, 0),
-                                       (self.rect[0], self.rect[1]), 7)  # top left
-
-                    pygame.draw.circle(self.screen, (0, 255, 0),
-                                       (self.rect[0] + self.rect[2], self.rect[1]), 7)  # top right
-
-                    pygame.draw.circle(self.screen, (0, 0, 255),
-                                       (self.rect[0], self.rect[1] + self.rect[3]), 7)  # bottom left
-
-                    pygame.draw.circle(self.screen, (255, 0, 255),
-                                       (self.rect[0] + self.rect[2], self.rect[1] + self.rect[3]), 7)  # bottom right
-
-            if self.text_size > 0:
-                size = self.text_size
-            else:
-                size = self.rect[3] - (self.rect[3] // 3)
-
-            btn_font = pygame.font.Font(self.font_path, size)
-
-            textobj = btn_font.render(self.text, True, self.text_color)
-            textobj_rect = textobj.get_rect()
-
-            textobj_rect.center = (self.rect[0] + self.rect[2] // 2, self.rect[1] + self.rect[3] // 2)
-
-            self.screen.blit(textobj, textobj_rect)
-
-            mouse_pos = pygame.mouse.get_pos()
-            if self.rect.colliderect((mouse_pos[0], mouse_pos[1], 1, 1)) and self.active:
-
-                self.color = [max(0, x - 20) for x in self.original_color]
-                self.border_color = [max(0, x - 20) for x in self.original_border_color]
-
-                if pygame.mouse.get_pressed()[0]:
-                    if not self.is_being_pressed:
-                        self.on_click()
-
-                    self.color = [max(0, x - 30) for x in self.original_color]
-                    self.border_color = [max(0, x - 30) for x in self.original_border_color]
-
-
-                    self.is_being_pressed = True
-                elif not pygame.mouse.get_pressed()[0]:
-                    if self.is_being_pressed:
-                        self.color = self.original_color
-                    self.is_being_pressed = False
-
-
-            else:
-                self.color = self.original_color
-
-            return
+                        self.is_being_pressed = True
+                    elif not pygame.mouse.get_pressed()[0]:
+                        if self.is_being_pressed:
+                            self.color = self.original_color
+                        self.is_being_pressed = False
 
     def __str__(self):
         return f"Button <{self.text}>"
@@ -259,11 +347,22 @@ if __name__ == "__main__":
 
 
     button = Button(
-        screen, pygame.Rect(300, 300, 300, 100), [255, 0, 0], on_click,
-        "Go to space!", [0, 0, 0], "files/DynaPuff-VariableFont_wdth,wght.ttf",
-        30, 15, [190, 0, 0], 20
+        screen, pygame.Rect(300, 300, 500, 100), [255, 0, 0], on_click, "files/daniil_orlov.png",
+        "idk 7 maybe 7.2", [255, 255, 255], "files/papyrus.ttf",
+        0, 15, [67, 67, 67], 20
     )
     button.show = True
+
+    def button_layout_on_click():
+        print("Hello, world!")
+
+    button_layout = Button(
+        scr=screen, rect=pygame.Rect(950, 300, 300, 100), color=[145, 20, 15], on_click_func=button_layout_on_click,
+        image_path=None, btn_text="Go to space!", btntext_color=[0, 0, 0],
+        font_path="files/DynaPuff-VariableFont_wdth,wght.ttf", text_size=30, border_thickness=15,
+        border_color=[120, 5, 0], corner_radius=0
+    )
+    button_layout.show = True
 
 
     def handle_keyinputs():
@@ -284,6 +383,7 @@ if __name__ == "__main__":
     while run:
         screen.fill(main_color)
         button.handle()
+        button_layout.handle()
         for event in pygame.event.get():
             handle_keyinputs()
             if event.type == pygame.QUIT:
