@@ -229,10 +229,11 @@ class Button:
                     elif not pygame.mouse.get_pressed()[0]:
                         if self.is_being_pressed:
                             self.color = self.original_color
+                            self.border_color = self.original_border_color
                         self.is_being_pressed = False
-
                 else:
                     self.color = self.original_color
+                    self.border_color = self.original_border_color
 
                 return
             else:
@@ -320,7 +321,11 @@ class Button:
                     elif not pygame.mouse.get_pressed()[0]:
                         if self.is_being_pressed:
                             self.color = self.original_color
+                            self.border_color = self.original_border_color
                         self.is_being_pressed = False
+                else:
+                    self.color = self.original_color
+                    self.border_color = self.original_border_color
 
     def __str__(self):
         return f"Button <{self.text}>"
