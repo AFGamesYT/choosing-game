@@ -44,7 +44,7 @@ class Button:
         self.on_click = on_click_func
 
         self.active = True
-        self.show = False
+        self.show = True
 
         self.border_thickness = border_thickness
         self.border_color = border_color
