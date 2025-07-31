@@ -1,5 +1,5 @@
 import pygame
-
+from color_print import txt, format_print
 from Button import Button
 
 pygame.init()
@@ -37,6 +37,10 @@ def left_btn_click():
 
         # AFTER GAME LOGIC
         visual_text_text = f"You died! Your timeline: {timeline}"
+        format_print(
+            txt("You died! ", color="red", bold=True),
+            txt(f"Your timeline: ", color="white"),
+            txt(f"{timeline}", color="white", italic=True))
 
         # reset sequence v
         timeline = []
