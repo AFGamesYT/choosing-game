@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="06f6f30d-db88-4ad6-8bc4-28bccfb83c2a" name="Changes" comment="added 2 buttons and a timeline">
+    <list default="true" id="06f6f30d-db88-4ad6-8bc4-28bccfb83c2a" name="Changes" comment="created AnimatedImage.py for animations, is quite buggy right now, but i will fix later.">
+      <change afterPath="$PROJECT_DIR$/AnimatedImage.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/files/Raleway-VariableFont_wght.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/textures/test_stick_figure/idle.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/textures/test_stick_figure/wave.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/choosing_game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/choosing_game.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,31 +32,36 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="30TKbT2UaEcjgou2gCT40ak2TLx" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Button.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/afgam/PycharmProjects/choosing_game&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.AnimatedImage.executor": "Run",
+    "Python.Button.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/run/media/afgames/Чувак/Users/afgam/PycharmProjects/choosing_game",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\afgam\PycharmProjects\choosing_game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\afgam\PycharmProjects\choosing_game\textures\test_stick_figure" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-5a2391486177-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13763.11" />
+        <option value="bundled-python-sdk-03e874896e21-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.439" />
       </set>
     </attachedChunks>
   </component>
@@ -105,13 +114,32 @@
       <option name="project" value="LOCAL" />
       <updated>1753968542373</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added text on the top">
+      <option name="closed" value="true" />
+      <created>1753987354414</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1753987354414</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added cool print things">
+      <option name="closed" value="true" />
+      <created>1753992848784</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1753992848784</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="bugfixes" />
     <MESSAGE value="added 2 buttons and a timeline" />
-    <option name="LAST_COMMIT_MESSAGE" value="added 2 buttons and a timeline" />
+    <MESSAGE value="added text on the top" />
+    <MESSAGE value="added cool print things" />
+    <MESSAGE value="created AnimatedImage.py for animations, is quite buggy right now, but i will fix later." />
+    <option name="LAST_COMMIT_MESSAGE" value="created AnimatedImage.py for animations, is quite buggy right now, but i will fix later." />
   </component>
 </project>
