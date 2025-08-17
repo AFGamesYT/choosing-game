@@ -1,5 +1,4 @@
 import pygame
-from color_print import txt, format_print
 from Button import Button
 
 pygame.init()
@@ -37,10 +36,6 @@ def left_btn_click():
 
         # AFTER GAME LOGIC
         visual_text_text = f"You died! Your timeline: {timeline}"
-        format_print(
-            txt("You died! ", color="red", bold=True),
-            txt(f"Your timeline: ", color="white"),
-            txt(f"{timeline}", color="white", italic=True))
 
         # reset sequence v
         timeline = []
@@ -48,13 +43,6 @@ def left_btn_click():
         button_left.text = "Choice 0"
         button_right.text = "Choice 1"
 
-
-button_left = Button(
-        scr=screen, rect=pygame.Rect(200, HEIGHT//2-100, 600, 200), color=[145, 20, 15], on_click_func=left_btn_click,
-        image_path=None, btn_text="Choice 0", btntext_color=[0, 0, 0],
-        font_path="files/DynaPuff-VariableFont_wdth,wght.ttf", text_size=70, border_thickness=15,
-        border_color=[120, 5, 0], corner_radius=20
-)
 
 def right_btn_click():
     global iteration, MAX_ITERATION, button_right, button_left, timeline, visual_text_text
@@ -81,6 +69,13 @@ def right_btn_click():
         button_left.text = "Choice 0"
         button_right.text = "Choice 1"
 
+
+button_left = Button(
+        scr=screen, rect=pygame.Rect(200, HEIGHT//2-100, 600, 200), color=[145, 20, 15], on_click_func=left_btn_click,
+        image_path=None, btn_text="Choice 0", btntext_color=[0, 0, 0],
+        font_path="files/DynaPuff-VariableFont_wdth,wght.ttf", text_size=70, border_thickness=15,
+        border_color=[120, 5, 0], corner_radius=20
+)
 
 button_right = Button(
     scr=screen, rect=pygame.Rect(WIDTH-800, HEIGHT//2-100, 600, 200), color=[145, 20, 15], on_click_func=right_btn_click,
